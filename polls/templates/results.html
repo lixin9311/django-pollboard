@@ -1,0 +1,21 @@
+{% load filters %}
+<h1>{{ question.question_text }}</h1>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        {% for name in names %}
+        <th>{{ name }}</th>
+        {% endfor %}
+    </tr>
+    {% for choice in question.choice_set.all %}
+    <tr>
+        <th>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</th>
+        {% for name in names %}
+        <th>{{ choice|getopt:name }}</th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{% url 'polls:detail' question.id %}">Vote?</a>
